@@ -80,7 +80,7 @@ node_modules
 views/*.html
 
 # Database
-data
+data/*
 
 ### OSX template
 .DS_Store
