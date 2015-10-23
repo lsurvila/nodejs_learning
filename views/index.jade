@@ -1,4 +1,3 @@
-
 extends layout
 
 block content
@@ -10,19 +9,19 @@ block content
 
         // USER INFO
         #userInfo
-          h2 User Info
-          p
-            strong Name:
-            | <span id='userInfoName'></span>
-            br
-            strong Age:
-            | <span id='userInfoAge'></span>
-            br
-            strong Gender:
-            | <span id='userInfoGender'></span>
-            br
-            strong Location:
-            | <span id='userInfoLocation'></span>
+            h2 User Info
+            p
+                strong Name:
+                | <span id='userInfoName'></span>
+                br
+                strong Age:
+                | <span id='userInfoAge'></span>
+                br
+                strong Gender:
+                | <span id='userInfoGender'></span>
+                br
+                strong Location:
+                | <span id='userInfoLocation'></span>
         // /USER INFO
 
         // USER LIST
@@ -39,17 +38,32 @@ block content
         // ADD USER
         h2 Add User
         #addUser
-          fieldset
-            input#inputUserName(type='text', placeholder='Username')
-            input#inputUserEmail(type='text', placeholder='Email')
-            br
-            input#inputUserFullname(type='text', placeholder='Full Name')
-            input#inputUserAge(type='text', placeholder='Age')
-            br
-            input#inputUserLocation(type='text', placeholder='Location')
-            input#inputUserGender(type='text', placeholder='Gender')
-            br
-            button#btnAddUser Add User
-        // /ADD USER    
+            fieldset
+                input#inputUserName(type='text', placeholder='Username')
+                input#inputUserEmail(type='text', placeholder='Email')
+                br
+                input#inputUserFullname(type='text', placeholder='Full Name')
+                input#inputUserAge(type='text', placeholder='Age')
+                br
+                input#inputUserLocation(type='text', placeholder='Location')
+                input#inputUserGender(type='text', placeholder='Gender')
+                br
+                button#btnAddUser Add User
+        // /ADD USER
+
+        br
+        h2 Update User
+        #updateUser
+            fieldset
+                input#inputUserName(type='text', placeholder='Username')
+                input#inputUserEmail(type='text', placeholder='Email')
+                br
+                input#inputUserFullname(type='text', placeholder='Full Name')
+                input#inputUserAge(type='text', placeholder='Age')
+                br
+                input#inputUserLocation(type='text', placeholder='Location')
+                input#inputUserGender(type='text', placeholder='Gender')
+                br
+                button#btnUpdateUser Update User
 
     // /WRAPPER
