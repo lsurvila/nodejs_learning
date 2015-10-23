@@ -18,6 +18,9 @@ userListElement.find('table tbody').on('click', 'td a.linkdeleteuser', deleteUse
 // Add User button click
 $('#btnAddUser').on('click', addUser);
 
+// Update User button click
+$('#btnUpdateUser').on('click', updateUser);
+
 // Functions =============================================================
 
 // Fill table with data
@@ -157,4 +160,80 @@ function deleteUser(event) {
         // If they said no to the confirm, do nothing
         return false;
     }
+}
+
+// Update User (by user name)
+function updateUser(event) {
+    event.preventDefault();
+
+    var updateUserElement = $('#updateUser');
+    var inputUserNameElement = updateUserElement.find('fieldset input#inputUserName');
+    var inputUserEmailElement = updateUserElement.find('fieldset input#inputUserEmail');
+    var inputUserFullNameElement = updateUserElement.find('fieldset input#inputUserFullname');
+    var inputUserAgeElement = updateUserElement.find('fieldset input#inputUserAge');
+    var inputUserLocationElement = updateUserElement.find('fieldset input#inputUserLocation');
+    var inputUserGenderElement = updateUserElement.find('fieldset input#inputUserGender');
+
+    if (inputUserNameElement.val() !== '') {
+        // find user by name (first that matches). Dirty!
+        // Get Index of object based on id value
+        var arrayPosition = userListData.map(function (arrayItem) {
+            return arrayItem.username;
+        }).indexOf(inputUserNameElement.val());
+        // Get out User Object
+        var thisUserObject = userListData[arrayPosition];
+
+
+        var updateUser = {
+            '_id': thisUserObject._id,
+            'username': inputUserNameElement.val(),
+            'email': inputUserEmailElement.val(),
+            'fullname': inputUserFullNameElement.val(),
+            'age': inputUserAgeElement.val(),
+            'location': inputUserLocationElement.val(),
+            'gender': inputUserGenderElement.val()
+        };
+
+        if (updateUser.email === '') {
+            delete updateUser.email;
+        }
+        if (updateUser.fullname === '') {
+            delete updateUser.fullname;
+        }
+        if (updateUser.age === '') {
+            delete updateUser.age;
+        }
+        if (updateUser.location === '') {
+            delete updateUser.location;
+        }
+        if (updateUser.gender === '') {
+            delete updateUser.gender;
+        }
+
+
+
+        $.ajax({
+            type: 'PUT',
+            data : updateUser,
+            url : '/users/updateuser/',
+            dataType : 'JSON'
+        }).done(function (response) {
+
+            if (response.msg === '') {
+
+                // Clear the form inputs
+                updateUserElement.find('fieldset input').val('');
+
+                // Update the table
+                populateTable();
+
+            } else {
+                alert('Error: ' + response.msg);
+            }
+        });
+
+    } else {
+        alert('Error: Enter User Name to update');
+    }
+
 }
