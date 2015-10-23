@@ -9,14 +9,14 @@ $(document).ready(function () {
 
 });
 
+var userListElement = $('#userList');
 // Username link click
-$('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
+userListElement.find('table tbody').on('click', 'td a.linkshowuser', showUserInfo);
+// Delete User link click
+userListElement.find('table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
 // Add User button click
 $('#btnAddUser').on('click', addUser);
-
-// Delete User link click
-$('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
 // Functions =============================================================
 
@@ -39,9 +39,9 @@ function populateTable() {
         });
 
         // Inject the whole content string into our existing HTML table
-        $('#userList table tbody').html(tableContent);
+        $('#userList').find('table tbody').html(tableContent);
     });
-};
+}
 
 // Show User Info
 function showUserInfo(event) {
@@ -65,7 +65,7 @@ function showUserInfo(event) {
     $('#userInfoAge').text(' ' + thisUserObject.age);
     $('#userInfoGender').text(' ' + thisUserObject.gender);
     $('#userInfoLocation').text(' ' + thisUserObject.location);
-};
+}
 
 // Add User
 function addUser(event) {
@@ -73,7 +73,8 @@ function addUser(event) {
 
     // Super basic validation - increase errorCount variable if any fields are blank
     var errorCount = 0;
-    $('#addUser input').each(function (index, val) {
+    var addUserElement = $('#addUser');
+    addUserElement.find('input').each(function () {
         if ($(this).val() === '') {
             errorCount++;
         }
@@ -84,13 +85,13 @@ function addUser(event) {
 
         // If it is, compile all user info into one object
         var newUser = {
-            'username': $('#addUser fieldset input#inputUserName').val(),
-            'email': $('#addUser fieldset input#inputUserEmail').val(),
-            'fullname': $('#addUser fieldset input#inputUserFullname').val(),
-            'age': $('#addUser fieldset input#inputUserAge').val(),
-            'location': $('#addUser fieldset input#inputUserLocation').val(),
-            'gender': $('#addUser fieldset input#inputUserGender').val()
-        }
+            'username': addUserElement.find('fieldset input#inputUserName').val(),
+            'email': addUserElement.find('fieldset input#inputUserEmail').val(),
+            'fullname': addUserElement.find('fieldset input#inputUserFullname').val(),
+            'age': addUserElement.find('fieldset input#inputUserAge').val(),
+            'location': addUserElement.find('fieldset input#inputUserLocation').val(),
+            'gender': addUserElement.find('fieldset input#inputUserGender').val()
+        };
 
         // Use AJAX to post the object to our adduser service
         $.ajax({
@@ -104,7 +105,7 @@ function addUser(event) {
             if (response.msg === '') {
 
                 // Clear the form inputs
-                $('#addUser fieldset input').val('');
+                addUserElement.find('fieldset input').val('');
 
                 // Update the table
                 populateTable();
@@ -123,7 +124,7 @@ function addUser(event) {
         alert('Please fill in all fields');
         return false;
     }
-};
+}
 
 // Delete User
 function deleteUser(event) {
@@ -156,4 +157,4 @@ function deleteUser(event) {
         // If they said no to the confirm, do nothing
         return false;
     }
-};
+}

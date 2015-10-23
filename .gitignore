@@ -79,6 +79,9 @@ node_modules
 # Jade generated html
 views/*.html
 
+# Database
+data
+
 ### OSX template
 .DS_Store
 .AppleDouble
