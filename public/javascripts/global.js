@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 var userListElement = $('#userList');
 // Username link click
-userListElement.find('table tbody').on('click', 'td a.linkshowuser', showUserInfo);
+userListElement.find('table tbody').on('click', 'td a.linkshowuser', showUserInfoAndPrefillUpdate);
 // Delete User link click
 userListElement.find('table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
@@ -47,7 +47,7 @@ function populateTable() {
 }
 
 // Show User Info
-function showUserInfo(event) {
+function showUserInfoAndPrefillUpdate(event) {
 
     // Prevent Link from Firing
     event.preventDefault();
@@ -68,6 +68,16 @@ function showUserInfo(event) {
     $('#userInfoAge').text(' ' + thisUserObject.age);
     $('#userInfoGender').text(' ' + thisUserObject.gender);
     $('#userInfoLocation').text(' ' + thisUserObject.location);
+
+    var updateUserElement = $('#updateUser');
+    var a = updateUserElement.find('fieldset input#inputUserName');
+    a.val(thisUserObject.username);
+    updateUserElement.find('fieldset input#inputUserEmail').val(thisUserObject.email);
+    updateUserElement.find('fieldset input#inputUserFullname').val(thisUserObject.fullname);
+    updateUserElement.find('fieldset input#inputUserAge').val(thisUserObject.age);
+    updateUserElement.find('fieldset input#inputUserLocation').val(thisUserObject.location);
+    updateUserElement.find('fieldset input#inputUserGender').val(thisUserObject.gender);
+
 }
 
 // Add User
@@ -182,8 +192,6 @@ function updateUser(event) {
         }).indexOf(inputUserNameElement.val());
         // Get out User Object
         var thisUserObject = userListData[arrayPosition];
-
-
         var updateUser = {
             '_id': thisUserObject._id,
             'username': inputUserNameElement.val(),
@@ -193,24 +201,6 @@ function updateUser(event) {
             'location': inputUserLocationElement.val(),
             'gender': inputUserGenderElement.val()
         };
-
-        if (updateUser.email === '') {
-            delete updateUser.email;
-        }
-        if (updateUser.fullname === '') {
-            delete updateUser.fullname;
-        }
-        if (updateUser.age === '') {
-            delete updateUser.age;
-        }
-        if (updateUser.location === '') {
-            delete updateUser.location;
-        }
-        if (updateUser.gender === '') {
-            delete updateUser.gender;
-        }
-
-
 
         $.ajax({
             type: 'PUT',
